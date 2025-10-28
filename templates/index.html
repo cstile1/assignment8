@@ -162,7 +162,7 @@
             Inserts a line break after the second input field, moving subsequent elements to the next line.
         -->
         
-        <button onclick="calculate('add')">Add</button>
+        <button id="add">Add</button>
         <!--
             <button> Element: Add Button
             
@@ -171,7 +171,7 @@
             - "Add": The text displayed on the button.
         -->
         
-        <button onclick="calculate('subtract')">Subtract</button>
+        <button id="subtract">Subtract</button>
         <!--
             <button> Element: Subtract Button
             
@@ -180,7 +180,7 @@
             - "Subtract": The text displayed on the button.
         -->
         
-        <button onclick="calculate('multiply')">Multiply</button>
+        <button id="multiply">Multiply</button>
         <!--
             <button> Element: Multiply Button
             
@@ -189,7 +189,7 @@
             - "Multiply": The text displayed on the button.
         -->
         
-        <button onclick="calculate('divide')">Divide</button>
+        <button id="divide">Divide</button>
         <!--
             <button> Element: Divide Button
             
@@ -265,7 +265,7 @@
                     - body: JSON.stringify({ a: a, b: b }): Converts the JavaScript object { a: a, b: b } into a JSON string
                       to be sent in the request body.
                 */
-                const response = await fetch('/' + operation, {
+                const response = await fetch('/api/' + operation, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ a: a, b: b })
@@ -313,6 +313,13 @@
                 resultElement.innerText = 'Error: ' + error.message;
             }
         }
+        // Attach event listeners *after* the DOM is fully loaded
+    document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("add").addEventListener("click", () => calculate("add"));
+    document.getElementById("subtract").addEventListener("click", () => calculate("subtract"));
+    document.getElementById("multiply").addEventListener("click", () => calculate("multiply"));
+    document.getElementById("divide").addEventListener("click", () => calculate("divide"));
+});
     </script>
 </body>
 </html>
