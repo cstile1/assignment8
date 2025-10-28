@@ -27,6 +27,12 @@ def test_calculator_divide_by_zero(page, fastapi_server):
     page.fill("#a", "10")
     page.fill("#b", "0")
     page.click('button:text("Divide")')
-    page.wait_for_selector("#result", state="attached", timeout=3000)
+
+    # Wait for the error text to appear
+    page.wait_for_function(
+        """() => document.querySelector('#result') && document.querySelector('#result').innerText.includes('Cannot divide by zero')""",
+        timeout=5000
+    )
+
     result_text = page.inner_text("#result")
     assert result_text == "Error: Cannot divide by zero!", f"Expected 'Error: Cannot divide by zero!', got '{result_text}'"
